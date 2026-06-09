@@ -1,0 +1,38 @@
+# ---------- Python / Backend ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+prisma/migrations/dev.db*
+
+# ---------- Node / Frontend ----------
+node_modules/
+.next/
+out/
+build/
+dist/
+.turbo/
+*.tsbuildinfo
+
+# ---------- Env / Secrets ----------
+.env
+.env.*
+!.env.example
+*.local
+
+# ---------- Editor / OS ----------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# ---------- Docker ----------
+*.pid

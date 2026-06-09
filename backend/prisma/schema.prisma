@@ -1,0 +1,363 @@
+// StudentCareer AI Platform — Database Schema
+// ORM: Prisma (Python client)  |  Provider: PostgreSQL
+// Author: Abdulaziz AlAmawi
+
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ──────────────────────────────────────────────────────────────
+// ENUMS
+// ──────────────────────────────────────────────────────────────
+
+enum UserRole {
+  STUDENT
+  GRADUATE
+  ADMIN
+}
+
+enum CareerTrack {
+  SOFTWARE_ENGINEERING
+  ARTIFICIAL_INTELLIGENCE
+  CLOUD_COMPUTING
+  IT_INFRASTRUCTURE
+  DATA_SCIENCE
+  BUSINESS_ANALYSIS
+}
+
+enum ResumeTemplate {
+  MODERN
+  ATS_FRIENDLY
+  PROFESSIONAL
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum QuestionType {
+  TECHNICAL
+  BEHAVIORAL
+  SCENARIO
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum ReadinessLevel {
+  BEGINNER
+  DEVELOPING
+  JOB_READY
+  HIGHLY_COMPETITIVE
+}
+
+enum RoadmapKind {
+  LEARNING
+  CERTIFICATION
+  PROJECT
+  CAREER
+}
+
+enum RecommendationType {
+  SKILL
+  CERTIFICATION
+  PROJECT
+  TECHNOLOGY
+  COURSE
+}
+
+// ──────────────────────────────────────────────────────────────
+// CORE: USERS & PROFILES
+// ──────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  fullName     String   @map("full_name")
+  role         UserRole @default(STUDENT)
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  profile          Profile?
+  resumes          Resume[]
+  skills           UserSkill[]
+  certifications   Certification[]
+  projects         Project[]
+  interviewAttempts InterviewAttempt[]
+  roadmaps         CareerRoadmap[]
+  recommendations  Recommendation[]
+  analytics        Analytics?
+  readinessScores  ReadinessScore[]
+
+  @@map("users")
+}
+
+model Profile {
+  id          String       @id @default(uuid())
+  userId      String       @unique @map("user_id")
+  headline    String?
+  bio         String?
+  major       String?
+  university   String?
+  graduationYear Int?       @map("graduation_year")
+  careerTrack CareerTrack? @map("career_track")
+  location    String?
+  phone       String?
+  linkedinUrl String?      @map("linkedin_url")
+  githubUrl   String?      @map("github_url")
+  websiteUrl  String?      @map("website_url")
+  avatarUrl   String?      @map("avatar_url")
+  interests   String[]     @default([])
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+// ──────────────────────────────────────────────────────────────
+// RESUMES
+// ──────────────────────────────────────────────────────────────
+
+model Resume {
+  id         String         @id @default(uuid())
+  userId     String         @map("user_id")
+  title      String
+  template   ResumeTemplate @default(MODERN)
+  isPrimary  Boolean        @default(false) @map("is_primary")
+  // Structured resume content stored as JSON for flexibility.
+  content    Json           @default("{}")
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @updatedAt @map("updated_at")
+
+  user   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scores ResumeScore[]
+
+  @@index([userId])
+  @@map("resumes")
+}
+
+model ResumeScore {
+  id                String   @id @default(uuid())
+  resumeId          String   @map("resume_id")
+  atsScore          Float    @map("ats_score")
+  contentScore      Float    @map("content_score")
+  formattingScore   Float    @map("formatting_score")
+  completenessScore Float    @map("completeness_score")
+  skillsCoverage    Float    @map("skills_coverage")
+  overallScore      Float    @map("overall_score")
+  missingSections   String[] @default([]) @map("missing_sections")
+  missingSkills     String[] @default([]) @map("missing_skills")
+  suggestions       Json     @default("[]")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([resumeId])
+  @@map("resume_scores")
+}
+
+// ──────────────────────────────────────────────────────────────
+// SKILLS · CERTIFICATIONS · PROJECTS
+// ──────────────────────────────────────────────────────────────
+
+// Global catalog of skills (seeded), used by the gap analyzer.
+model Skill {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  category    String
+  tracks      CareerTrack[]
+  demandScore Float        @default(0.5) @map("demand_score")
+
+  users UserSkill[]
+
+  @@map("skills")
+}
+
+model UserSkill {
+  id      String     @id @default(uuid())
+  userId  String     @map("user_id")
+  skillId String     @map("skill_id")
+  level   SkillLevel @default(BEGINNER)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@map("user_skills")
+}
+
+model Certification {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  name        String
+  issuer      String
+  issueDate   DateTime? @map("issue_date")
+  expiryDate  DateTime? @map("expiry_date")
+  credentialId String?  @map("credential_id")
+  credentialUrl String? @map("credential_url")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("certifications")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  title       String
+  description String
+  techStack   String[] @default([]) @map("tech_stack")
+  repoUrl     String?  @map("repo_url")
+  liveUrl     String?  @map("live_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("projects")
+}
+
+// ──────────────────────────────────────────────────────────────
+// INTERVIEW SIMULATOR
+// ──────────────────────────────────────────────────────────────
+
+model InterviewQuestion {
+  id          String       @id @default(uuid())
+  track       CareerTrack
+  type        QuestionType
+  difficulty  Difficulty
+  prompt      String
+  // Ideal-answer keywords used by the heuristic evaluator.
+  keywords    String[]     @default([])
+  sampleAnswer String?     @map("sample_answer")
+
+  answers InterviewAnswer[]
+
+  @@index([track, type, difficulty])
+  @@map("interview_questions")
+}
+
+model InterviewAttempt {
+  id           String      @id @default(uuid())
+  userId       String      @map("user_id")
+  track        CareerTrack
+  difficulty   Difficulty
+  score        Float       @default(0)
+  totalQuestions Int       @default(0) @map("total_questions")
+  feedback     Json        @default("{}")
+  improvementAreas String[] @default([]) @map("improvement_areas")
+  completedAt  DateTime?   @map("completed_at")
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers InterviewAnswer[]
+
+  @@index([userId])
+  @@map("interview_attempts")
+}
+
+model InterviewAnswer {
+  id         String   @id @default(uuid())
+  attemptId  String   @map("attempt_id")
+  questionId String   @map("question_id")
+  answer     String
+  score      Float    @default(0)
+  feedback   String?
+
+  attempt  InterviewAttempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question InterviewQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([attemptId])
+  @@map("interview_answers")
+}
+
+// ──────────────────────────────────────────────────────────────
+// READINESS · ROADMAPS · RECOMMENDATIONS · ANALYTICS
+// ──────────────────────────────────────────────────────────────
+
+model ReadinessScore {
+  id                 String         @id @default(uuid())
+  userId             String         @map("user_id")
+  resumeScore        Float          @map("resume_score")
+  skillsScore        Float          @map("skills_score")
+  certificationsScore Float         @map("certifications_score")
+  projectsScore      Float          @map("projects_score")
+  interviewScore     Float          @map("interview_score")
+  overallScore       Float          @map("overall_score")
+  level              ReadinessLevel
+  createdAt          DateTime       @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("readiness_scores")
+}
+
+model CareerRoadmap {
+  id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  track       CareerTrack
+  kind        RoadmapKind
+  title       String
+  // Ordered list of steps/milestones stored as JSON.
+  steps       Json        @default("[]")
+  progress    Float       @default(0)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("career_roadmaps")
+}
+
+model Recommendation {
+  id          String             @id @default(uuid())
+  userId      String             @map("user_id")
+  type        RecommendationType
+  title       String
+  description String
+  priority    Int                @default(3)
+  resourceUrl String?            @map("resource_url")
+  isCompleted Boolean            @default(false) @map("is_completed")
+  createdAt   DateTime           @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("recommendations")
+}
+
+model Analytics {
+  id                 String   @id @default(uuid())
+  userId             String   @unique @map("user_id")
+  resumesCreated     Int      @default(0) @map("resumes_created")
+  analysesRun        Int      @default(0) @map("analyses_run")
+  interviewsTaken    Int      @default(0) @map("interviews_taken")
+  avgInterviewScore  Float    @default(0) @map("avg_interview_score")
+  lastReadinessScore Float    @default(0) @map("last_readiness_score")
+  profileViews       Int      @default(0) @map("profile_views")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("analytics")
+}
