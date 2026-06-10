@@ -6,6 +6,8 @@ import logging
 
 from prisma import Prisma
 
+from app.core.exceptions import DatabaseUnavailableError
+
 logger = logging.getLogger("studentcareer.db")
 
 # A single shared Prisma client for the application lifetime.
@@ -38,9 +40,13 @@ async def disconnect_db() -> None:
 async def get_db() -> Prisma:
     """FastAPI dependency that returns the connected Prisma client.
 
-    Connects lazily on first use; raises if the database is unreachable so the
-    request fails fast with a clear error rather than hanging.
+    Connects lazily on first use with a short timeout. Raises a clear 503 if the
+    database is unreachable instead of hanging or returning an opaque 500.
     """
     if not prisma.is_connected():
-        await prisma.connect()
+        try:
+            await asyncio.wait_for(prisma.connect(), timeout=5.0)
+        except Exception as exc:
+            logger.error("Database connection failed: %s", exc)
+            raise DatabaseUnavailableError() from exc
     return prisma

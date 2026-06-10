@@ -141,12 +141,29 @@ git clone https://github.com/<your-username>/studentcareer-ai-platform.git
 cd studentcareer-ai-platform
 ```
 
-### 2. Run everything with Docker (recommended)
+### 2. Quick start (Windows — two terminals)
+```powershell
+# Terminal 1 — Backend
+cd backend
+.\.venv\Scripts\activate          # or use C:\scvenv if on a localized path
+copy .env.example .env
+$env:SECRET_KEY="dev-secret"; $env:DATABASE_URL="postgresql://studentcareer:studentcareer@localhost:5432/studentcareer"
+uvicorn app.main:app --reload
+
+# Terminal 2 — Frontend
+cd frontend
+copy .env.example .env.local
+npm install && npm run dev
+```
+Or run `.\scripts\start-dev.ps1` to launch both in separate windows.
+
+- Frontend → http://localhost:3000
+- Backend (Swagger) → http://localhost:8000/docs
+
+### 3. Run everything with Docker (recommended for full DB support)
 ```bash
 docker compose up --build
 ```
-- Frontend → http://localhost:3000
-- Backend (Swagger) → http://localhost:8000/docs
 
 ### 3. Manual setup
 
