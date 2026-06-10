@@ -28,6 +28,6 @@ async def get_current_user(
         raise UnauthorizedError("Invalid or expired token")
 
     user = await db.user.find_unique(where={"id": user_id})
-    if not user or not user.is_active:
+    if not user or not user.isActive:
         raise UnauthorizedError("User not found or inactive")
     return user
