@@ -1,9 +1,8 @@
 """Interview service — question delivery, scoring, and attempt persistence."""
 from __future__ import annotations
 
-import json
-
 from prisma import Prisma
+from prisma.fields import Json
 
 from app.ai.interview_evaluator import evaluate_attempt
 from app.ai.provider import get_provider
@@ -76,7 +75,7 @@ async def submit(db: Prisma, user_id: str, payload: InterviewSubmit) -> Intervie
         data={
             "score": aggregate["score"],
             "improvementAreas": aggregate["improvement_areas"],
-            "feedback": json.dumps({"per_answer": [a.model_dump() for a in per_answer]}),
+            "feedback": Json({"per_answer": [a.model_dump() for a in per_answer]}),
             "completedAt": datetime.now(timezone.utc),
         },
     )

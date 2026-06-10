@@ -1,9 +1,8 @@
 """Career roadmap service — generates and persists roadmaps."""
 from __future__ import annotations
 
-import json
-
 from prisma import Prisma
+from prisma.fields import Json
 
 from app.ai import roadmap_generator
 from app.schemas.roadmap import RoadmapRequest, RoadmapResult
@@ -22,7 +21,7 @@ async def generate(db: Prisma, user_id: str, payload: RoadmapRequest) -> Roadmap
                 "track": payload.career_track.value,
                 "kind": section["kind"],
                 "title": section["title"],
-                "steps": json.dumps(section["steps"]),
+                "steps": Json(section["steps"]),
             }
         )
 

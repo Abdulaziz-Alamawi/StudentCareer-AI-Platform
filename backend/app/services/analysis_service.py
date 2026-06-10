@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 
 from prisma import Prisma
+from prisma.fields import Json
 
 from app.ai.provider import get_provider
 from app.core.exceptions import ForbiddenError, NotFoundError, AppError
@@ -40,7 +41,7 @@ async def analyze(db: Prisma, user_id: str, payload: AnalysisRequest) -> Analysi
                 "overallScore": result["overall_score"],
                 "missingSections": result["missing_sections"],
                 "missingSkills": result["missing_skills"],
-                "suggestions": json.dumps(result["suggestions"]),
+                "suggestions": Json(result["suggestions"]),
             }
         )
     await db.analytics.update(

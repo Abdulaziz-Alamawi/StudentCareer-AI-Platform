@@ -55,5 +55,7 @@ async def duplicate_resume(
 @router.delete("/{resume_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_resume(
     resume_id: str, user: User = Depends(get_current_user), db=Depends(get_db)
-) -> None:
+):
+    """Delete a resume. Returns 204 No Content on success."""
     await resume_service.delete(db, user.id, resume_id)
+    return None

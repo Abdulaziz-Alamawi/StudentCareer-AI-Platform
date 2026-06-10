@@ -171,6 +171,20 @@ cp .env.example .env.local    # set NEXT_PUBLIC_API_URL
 npm run dev
 ```
 
+### Troubleshooting
+
+- **`prisma generate` → `spawn prisma-client-py ENOENT` (Windows):** make sure the
+  virtual environment is **activated** (`\.venv\Scripts\activate`) so the venv
+  `Scripts` directory is on `PATH`, then re-run `prisma generate`.
+- **Non‑ASCII project path (Windows):** the Prisma Python generator may fail to
+  write the client when the absolute path contains non‑ASCII characters (e.g. a
+  localized `Documents` folder). If `from prisma.models import ...` fails after a
+  "successful" generate, clone/move the project to an ASCII path such as
+  `C:\dev\studentcareer-ai-platform`. Docker, CI, Vercel and Railway use ASCII
+  paths and are unaffected.
+- **Database migrations:** this project uses Prisma's schema‑first `prisma db push`
+  (the recommended flow for `prisma-client-py`); Docker and CI run it automatically.
+
 ---
 
 ## 📁 Folder Structure

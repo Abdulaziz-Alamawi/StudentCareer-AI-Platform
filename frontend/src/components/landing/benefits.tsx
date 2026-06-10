@@ -29,7 +29,7 @@ export function Benefits() {
             Turn uncertainty into a clear plan
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Most students don't know if they're ready for the job market. We replace
+            Most students do not know if they are ready for the job market. We replace
             anxiety with measurable, actionable insight.
           </p>
           <ul className="mt-8 space-y-4">

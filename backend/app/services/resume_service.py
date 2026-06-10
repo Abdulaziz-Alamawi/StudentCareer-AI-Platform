@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 
 from prisma import Prisma
+from prisma.fields import Json
 from prisma.models import Resume
 
 from app.core.exceptions import ForbiddenError, NotFoundError
@@ -41,7 +42,7 @@ async def create(db: Prisma, user_id: str, payload: ResumeCreate) -> ResumeOut:
             "userId": user_id,
             "title": payload.title,
             "template": payload.template.value,
-            "content": json.dumps(payload.content.model_dump()),
+            "content": Json(payload.content.model_dump()),
         }
     )
     await db.analytics.update(
@@ -71,7 +72,7 @@ async def update(db: Prisma, user_id: str, resume_id: str, payload: ResumeUpdate
     if payload.is_primary is not None:
         data["isPrimary"] = payload.is_primary
     if payload.content is not None:
-        data["content"] = json.dumps(payload.content.model_dump())
+        data["content"] = Json(payload.content.model_dump())
 
     resume = await db.resume.update(where={"id": resume_id}, data=data)
     return _to_out(resume)
@@ -80,14 +81,14 @@ async def update(db: Prisma, user_id: str, resume_id: str, payload: ResumeUpdate
 async def duplicate(db: Prisma, user_id: str, resume_id: str) -> ResumeOut:
     original = await _get_owned(db, user_id, resume_id)
     content = original.content
-    if not isinstance(content, str):
-        content = json.dumps(content)
+    if isinstance(content, str):
+        content = json.loads(content)
     copy = await db.resume.create(
         data={
             "userId": user_id,
             "title": f"{original.title} (Copy)",
             "template": original.template,
-            "content": content,
+            "content": Json(content or {}),
         }
     )
     return _to_out(copy)
