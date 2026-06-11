@@ -6,7 +6,7 @@
 
 Helping students and graduates build stronger resumes, ace interviews, close skill gaps, and become **job-ready** through explainable AI recommendations and career analytics.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -18,7 +18,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 [![Build](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)](#deployment-guide)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366F1?style=for-the-badge&logo=vercel&logoColor=white)](#live-demo)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366F1?style=for-the-badge&logo=vercel&logoColor=white)](https://studentcareer-ai-platform.vercel.app)
 
 **Built and Maintained by Abdulaziz AlAmawi**
 
@@ -49,7 +49,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ## Live Demo
 
-> **Live URL:** _coming soon_ — replace this line with your deployed link, e.g. `https://student-career-ai.vercel.app`
+> **Live URL:** [https://studentcareer-ai-platform.vercel.app](https://studentcareer-ai-platform.vercel.app)
 
 This is a full-stack app, so a complete live demo runs on two services:
 
