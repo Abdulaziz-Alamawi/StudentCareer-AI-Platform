@@ -1,12 +1,12 @@
 # Development Plan
 
-## Phase 1 — Foundation ✅
+## Phase 1 — Foundation
 - [x] Monorepo structure (frontend + backend + docs)
 - [x] PostgreSQL schema (Prisma)
 - [x] FastAPI core (config, security, JWT, Prisma lifecycle)
 - [x] Next.js 15 setup (Tailwind, Shadcn, dark/light mode)
 
-## Phase 2 — AI Engine ✅
+## Phase 2 — AI Engine
 - [x] Resume analyzer (ATS, content, formatting, completeness)
 - [x] Skill gap analyzer (TF-IDF + cosine similarity)
 - [x] Career readiness engine (weighted scoring)
@@ -14,20 +14,20 @@
 - [x] Interview evaluator (heuristic keyword scoring)
 - [x] Pluggable AI provider interface
 
-## Phase 3 — Backend APIs ✅
+## Phase 3 — Backend APIs
 - [x] Auth (register, login, profile)
 - [x] Resume CRUD + duplicate
 - [x] Analysis, interview, skills, roadmap, readiness, dashboard
 - [x] Database seed (skills + interview questions)
 - [x] Unit + integration tests (17 passing)
 
-## Phase 4 — Frontend ✅
+## Phase 4 — Frontend
 - [x] Landing page (hero, features, stats, benefits, testimonials, FAQ, contact, footer)
 - [x] Auth pages (login, register)
 - [x] Dashboard with all 7 modules
 - [x] API client + auth context
 
-## Phase 5 — DevOps & Docs ✅
+## Phase 5 — DevOps & Docs
 - [x] Docker Compose
 - [x] Dockerfiles (frontend + backend)
 - [x] README, LICENSE, CHANGELOG, CONTRIBUTING
