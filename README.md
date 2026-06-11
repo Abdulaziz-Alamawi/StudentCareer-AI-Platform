@@ -18,6 +18,8 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 [![Build](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)](#-deployment-guide)
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366F1?style=for-the-badge&logo=vercel&logoColor=white)](#-live-demo)
+
 **Built and Maintained by Abdulaziz AlAmawi**
 
 </div>
@@ -26,6 +28,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ## 📚 Table of Contents
 
+- [Live Demo](#-live-demo)
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
@@ -41,6 +44,21 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 - [Future Improvements](#-future-improvements)
 - [Author](#-author)
 - [License](#-license)
+
+---
+
+## 🌐 Live Demo
+
+> **Live URL:** _coming soon_ — replace this line with your deployed link, e.g. `https://student-career-ai.vercel.app`
+
+This is a full-stack app, so a complete live demo runs on two services:
+
+| Part | Host | One-click deploy |
+| --- | --- | --- |
+| Frontend (Next.js) | **Vercel** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Abdulaziz-Alamawi/StudentCareer-AI-Platform&root-directory=frontend&env=NEXT_PUBLIC_API_URL&envDescription=Base%20URL%20of%20the%20deployed%20FastAPI%20backend) |
+| Backend + Database (FastAPI + PostgreSQL) | **Railway** | [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new) |
+
+> After deploying the backend on Railway, set the frontend's `NEXT_PUBLIC_API_URL` (on Vercel) to the backend URL, and set the backend's `BACKEND_CORS_ORIGINS` to your Vercel domain. See the [Deployment Guide](#-deployment-guide) for full steps.
 
 ---
 
