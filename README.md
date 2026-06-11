@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 StudentCareer AI Platform
+# StudentCareer AI Platform
 
 ### AI-Powered Career Intelligence & Readiness Platform
 
@@ -16,9 +16,9 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](./LICENSE)
 [![Build](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)](./.github/workflows/ci.yml)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)](#-deployment-guide)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)](#deployment-guide)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366F1?style=for-the-badge&logo=vercel&logoColor=white)](#-live-demo)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-6366F1?style=for-the-badge&logo=vercel&logoColor=white)](#live-demo)
 
 **Built and Maintained by Abdulaziz AlAmawi**
 
@@ -26,28 +26,28 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
-- [Live Demo](#-live-demo)
-- [Project Overview](#-project-overview)
-- [Key Features](#-key-features)
-- [System Architecture](#-system-architecture)
-- [Technology Stack](#-technology-stack)
-- [AI Modules](#-ai-modules)
-- [Screenshots](#-screenshots)
-- [Installation](#-installation)
-- [API Documentation](#-api-documentation)
-- [Deployment Guide](#-deployment-guide)
-- [Folder Structure](#-folder-structure)
-- [Project Statistics](#-project-statistics)
-- [Testing](#-testing)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
-- [License](#-license)
+- [Live Demo](#live-demo)
+- [Project Overview](#project-overview)
+- [Key Features](#key-features)
+- [System Architecture](#system-architecture)
+- [Technology Stack](#technology-stack)
+- [AI Modules](#ai-modules)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [API Documentation](#api-documentation)
+- [Deployment Guide](#deployment-guide)
+- [Folder Structure](#folder-structure)
+- [Project Statistics](#project-statistics)
+- [Testing](#testing)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
+- [License](#license)
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
 > **Live URL:** _coming soon_ — replace this line with your deployed link, e.g. `https://student-career-ai.vercel.app`
 
@@ -58,11 +58,11 @@ This is a full-stack app, so a complete live demo runs on two services:
 | Frontend (Next.js) | **Vercel** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Abdulaziz-Alamawi/StudentCareer-AI-Platform&root-directory=frontend&env=NEXT_PUBLIC_API_URL&envDescription=Base%20URL%20of%20the%20deployed%20FastAPI%20backend) |
 | Backend + Database (FastAPI + PostgreSQL) | **Railway** | [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new) |
 
-> After deploying the backend on Railway, set the frontend's `NEXT_PUBLIC_API_URL` (on Vercel) to the backend URL, and set the backend's `BACKEND_CORS_ORIGINS` to your Vercel domain. See the [Deployment Guide](#-deployment-guide) for full steps.
+> After deploying the backend on Railway, set the frontend's `NEXT_PUBLIC_API_URL` (on Vercel) to the backend URL, and set the backend's `BACKEND_CORS_ORIGINS` to your Vercel domain. See the [Deployment Guide](#deployment-guide) for full steps.
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 **StudentCareer AI Platform** is a full-stack, AI-powered SaaS application designed to maximize the **employability** of university students and fresh graduates.
 
@@ -77,24 +77,24 @@ The platform is built with a clean, scalable, production-minded architecture and
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Module | Description |
 | --- | --- |
-| 🏠 **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
-| 🔐 **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
-| 📄 **Smart Resume Builder** | Create, edit, duplicate, and export resumes with 3 templates. |
-| 🤖 **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing-skills report. |
-| 🎤 **AI Interview Simulator** | 6 career tracks; technical / behavioral / scenario questions; difficulty levels; scoring. |
-| 📊 **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
-| 🧩 **Skill Gap Analyzer** | Detects missing skills; recommends technologies, certifications, and projects. |
-| 🗺️ **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
-| 📈 **User Dashboard** | Unified analytics dashboard for all modules with charts and score rings. |
-| 🌐 **Bilingual UI** | Full English / Arabic localization with RTL support. |
+| **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
+| **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
+| **Smart Resume Builder** | Create, edit, duplicate, and export resumes with 3 templates. |
+| **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing-skills report. |
+| **AI Interview Simulator** | 6 career tracks; technical / behavioral / scenario questions; difficulty levels; scoring. |
+| **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
+| **Skill Gap Analyzer** | Detects missing skills; recommends technologies, certifications, and projects. |
+| **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
+| **User Dashboard** | Unified analytics dashboard for all modules with charts and score rings. |
+| **Bilingual UI** | Full English / Arabic localization with RTL support. |
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
@@ -133,7 +133,7 @@ See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🛠 Technology Stack
+## Technology Stack
 
 | Layer | Technologies |
 | --- | --- |
@@ -146,7 +146,7 @@ See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🤖 AI Modules
+## AI Modules
 
 All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and dependency-free** (no external API calls by default). A pluggable provider interface allows an LLM/OpenAI backend to be added later.
 
@@ -162,7 +162,7 @@ All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Landing Page
 ![Landing Page](./docs/screenshots/landing-page.png)
@@ -176,7 +176,7 @@ All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### Prerequisites
 - Node.js ≥ 20
@@ -227,7 +227,7 @@ npm run dev
 
 ---
 
-## 📡 API Documentation
+## API Documentation
 
 Interactive docs (Swagger UI) are auto-generated at `http://localhost:8000/docs`.
 A written reference lives in [`docs/API.md`](./docs/API.md).
@@ -247,7 +247,7 @@ Key endpoint groups (prefixed with `/api/v1`):
 
 ---
 
-## 🚢 Deployment Guide
+## Deployment Guide
 
 **Frontend → Vercel**
 1. Import the `frontend/` directory as a Vercel project.
@@ -264,7 +264,7 @@ See [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for details.
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```text
 StudentCareer-AI-Platform/
@@ -299,22 +299,22 @@ StudentCareer-AI-Platform/
 
 ---
 
-## 📊 Project Statistics
+## Project Statistics
 
 | Capability | Status |
 | --- | :---: |
-| Full-Stack Architecture | ✅ |
-| AI-Powered Platform | ✅ |
-| FastAPI Backend | ✅ |
-| Next.js Frontend | ✅ |
-| PostgreSQL Database | ✅ |
-| Docker Support | ✅ |
-| CI/CD Ready | ✅ |
-| Production-Ready Deployment | ✅ |
+| Full-Stack Architecture | Yes |
+| AI-Powered Platform | Yes |
+| FastAPI Backend | Yes |
+| Next.js Frontend | Yes |
+| PostgreSQL Database | Yes |
+| Docker Support | Yes |
+| CI/CD Ready | Yes |
+| Production-Ready Deployment | Yes |
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 cd backend
@@ -323,7 +323,7 @@ pytest -v                 # unit + integration + validation + E2E tests
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - OpenAI / LLM integration for free-text interview evaluation (architecture already supports a pluggable provider).
 - Real PDF parsing pipeline (currently text + structured input).
@@ -333,7 +333,7 @@ pytest -v                 # unit + integration + validation + E2E tests
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Abdulaziz AlAmawi**
 
@@ -341,7 +341,7 @@ Full-Stack & AI Engineer — designed and built the entire platform end to end: 
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE).
 
