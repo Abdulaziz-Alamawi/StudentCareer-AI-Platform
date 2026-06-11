@@ -37,7 +37,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 **StudentCareer AI Platform** is a full-stack, AI-powered SaaS application designed to maximize the **employability** of university students and fresh graduates.
 
@@ -56,15 +56,15 @@ The platform is built with a clean, scalable, production-minded architecture and
 
 | Module | Description |
 | --- | --- |
-| 🏠 **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
-| 🔐 **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
-| 📄 **Smart Resume Builder** | Create, edit, duplicate, and export resumes (PDF) with 3 templates. |
-| 🤖 **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing skills report. |
-| 🎤 **AI Interview Simulator** | 6 career tracks, technical/behavioral/scenario questions, difficulty levels, scoring. |
-| 📊 **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
-| 🧩 **Skill Gap Analyzer** | Detects missing skills, recommends technologies, certifications, and projects. |
-| 🗺️ **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
-| 📈 **User Dashboard** | Unified analytics dashboard for all modules. |
+|  **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
+|  **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
+|  **Smart Resume Builder** | Create, edit, duplicate, and export resumes (PDF) with 3 templates. |
+|  **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing skills report. |
+|  **AI Interview Simulator** | 6 career tracks, technical/behavioral/scenario questions, difficulty levels, scoring. |
+|  **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
+|  **Skill Gap Analyzer** | Detects missing skills, recommends technologies, certifications, and projects. |
+|  **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
+|  **User Dashboard** | Unified analytics dashboard for all modules. |
 
 ---
 
@@ -79,7 +79,7 @@ The platform is built with a clean, scalable, production-minded architecture and
 
 ---
 
-## 🏗 Architecture
+##  Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -128,7 +128,7 @@ See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## ⚙️ Installation Guide
+##  Installation Guide
 
 ### Prerequisites
 - Node.js ≥ 20
@@ -250,7 +250,7 @@ Key endpoint groups:
 
 ---
 
-## 🚢 Deployment Guide
+##  Deployment Guide
 
 **Frontend → Vercel**
 1. Import the `frontend/` directory as a Vercel project.
@@ -276,7 +276,7 @@ pytest -v                 # unit + integration + validation tests
 
 ---
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 - OpenAI / LLM integration for free-text interview evaluation (architecture already supports a pluggable provider).
 - Real PDF parsing pipeline (currently text + structured input).
@@ -286,7 +286,7 @@ pytest -v                 # unit + integration + validation tests
 
 ---
 
-## 📄 License
+##  License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE).
 
