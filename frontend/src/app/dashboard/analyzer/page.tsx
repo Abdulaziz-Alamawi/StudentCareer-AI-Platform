@@ -13,7 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { ScoreBars } from "@/components/dashboard/charts";
+import { useI18n } from "@/lib/i18n";
 
 const severityStyle: Record<string, string> = {
   high: "text-rose-500",
@@ -22,6 +23,7 @@ const severityStyle: Record<string, string> = {
 };
 
 export default function AnalyzerPage() {
+  const { t } = useI18n();
   const [track, setTrack] = React.useState(CAREER_TRACKS[0].value);
   const [summary, setSummary] = React.useState("");
   const [skills, setSkills] = React.useState("");
@@ -49,9 +51,9 @@ export default function AnalyzerPage() {
       };
       const res = await api.analyzeResume({ content, target_track: track });
       setResult(res);
-      toast.success("Analysis complete!");
+      toast.success(t("analyzer.complete"));
     } catch (e: any) {
-      toast.error(e.message ?? "Analysis failed");
+      toast.error(e.message ?? t("analyzer.failed"));
     } finally {
       setLoading(false);
     }
@@ -59,41 +61,42 @@ export default function AnalyzerPage() {
 
   const subScores = result
     ? [
-        { label: "ATS", value: result.ats_score },
-        { label: "Content", value: result.content_score },
-        { label: "Formatting", value: result.formatting_score },
-        { label: "Completeness", value: result.completeness_score },
-        { label: "Skills Coverage", value: result.skills_coverage },
+        { label: t("analyzer.atsLabel"), value: result.ats_score },
+        { label: t("analyzer.content"), value: result.content_score },
+        { label: t("analyzer.formatting"), value: result.formatting_score },
+        { label: t("analyzer.completeness"), value: result.completeness_score },
+        { label: t("analyzer.skillsCoverage"), value: result.skills_coverage },
       ]
     : [];
 
   return (
     <div>
       <PageHeader
-        title="AI Resume Analyzer"
-        description="Get an instant ATS score and actionable improvements."
+        showBack
+        title={t("analyzer.title")}
+        description={t("analyzer.desc")}
       />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <ScanSearch className="h-5 w-5 text-primary" /> Resume Input
+              <ScanSearch className="h-5 w-5 text-primary" /> {t("analyzer.input")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>Target career track</Label>
+              <Label>{t("analyzer.targetTrack")}</Label>
               <Select value={track} onChange={(e) => setTrack(e.target.value)}>
-                {CAREER_TRACKS.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
+                {CAREER_TRACKS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
                   </option>
                 ))}
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Contact email</Label>
+              <Label>{t("analyzer.contactEmail")}</Label>
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -101,15 +104,15 @@ export default function AnalyzerPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Professional summary</Label>
+              <Label>{t("analyzer.summary")}</Label>
               <Textarea
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
-                placeholder="A software engineer who built and optimized..."
+                placeholder={t("analyzer.summaryPlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Skills (comma separated)</Label>
+              <Label>{t("analyzer.skills")}</Label>
               <Input
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
@@ -117,7 +120,7 @@ export default function AnalyzerPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Experience bullets (one per line)</Label>
+              <Label>{t("analyzer.expBullets")}</Label>
               <Textarea
                 value={experience}
                 onChange={(e) => setExperience(e.target.value)}
@@ -131,11 +134,11 @@ export default function AnalyzerPage() {
                 onChange={(e) => setHasEducation(e.target.checked)}
                 className="h-4 w-4"
               />
-              Include education section
+              {t("analyzer.includeEducation")}
             </label>
             <Button onClick={analyze} disabled={loading} className="w-full">
               {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-              Analyze resume
+              {t("analyzer.analyze")}
             </Button>
           </CardContent>
         </Card>
@@ -145,31 +148,21 @@ export default function AnalyzerPage() {
             <>
               <Card>
                 <CardContent className="flex flex-col items-center gap-4 pt-6 sm:flex-row sm:gap-8">
-                  <ScoreRing value={result.overall_score} label="Overall" />
-                  <div className="flex-1 space-y-3">
-                    {subScores.map((s) => (
-                      <div key={s.label}>
-                        <div className="mb-1 flex justify-between text-xs">
-                          <span>{s.label}</span>
-                          <span className="text-muted-foreground">
-                            {Math.round(s.value)}%
-                          </span>
-                        </div>
-                        <Progress value={s.value} />
-                      </div>
-                    ))}
+                  <ScoreRing value={result.overall_score} label={t("analyzer.overall")} />
+                  <div className="flex-1">
+                    <ScoreBars data={subScores} />
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Suggestions</CardTitle>
+                  <CardTitle className="text-base">{t("analyzer.suggestions")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
                   {result.suggestions.length === 0 ? (
                     <p className="flex items-center gap-2 text-sm text-emerald-500">
-                      <CheckCircle2 className="h-4 w-4" /> Great — no major issues found!
+                      <CheckCircle2 className="h-4 w-4" /> {t("analyzer.noIssues")}
                     </p>
                   ) : (
                     result.suggestions.map((s, i) => (
@@ -186,17 +179,28 @@ export default function AnalyzerPage() {
                 </CardContent>
               </Card>
 
-              {result.missing_skills.length > 0 && (
+              {(result.matched_skills.length > 0 || result.missing_skills.length > 0) && (
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-base">Missing Skills</CardTitle>
+                    <CardTitle className="text-base">{t("analyzer.missingSkills")}</CardTitle>
                   </CardHeader>
-                  <CardContent className="flex flex-wrap gap-2">
-                    {result.missing_skills.map((s) => (
-                      <Badge key={s} variant="warning">
-                        {s}
-                      </Badge>
-                    ))}
+                  <CardContent className="space-y-3">
+                    {result.matched_skills.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {result.matched_skills.map((s) => (
+                          <Badge key={s} variant="success">
+                            {s}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      {result.missing_skills.map((s) => (
+                        <Badge key={s} variant="warning">
+                          {s}
+                        </Badge>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               )}
@@ -205,7 +209,7 @@ export default function AnalyzerPage() {
             <Card>
               <CardContent className="flex h-full min-h-[300px] flex-col items-center justify-center text-center text-muted-foreground">
                 <ScanSearch className="mb-3 h-10 w-10 opacity-40" />
-                <p>Fill in your resume details and run the analysis to see your scores.</p>
+                <p>{t("analyzer.empty")}</p>
               </CardContent>
             </Card>
           )}

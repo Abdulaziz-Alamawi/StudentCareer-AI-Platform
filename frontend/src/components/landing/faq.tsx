@@ -3,41 +3,24 @@
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const faqs = [
-  {
-    q: "Is StudentCareer AI free to use?",
-    a: "Yes — the core modules (resume builder, analyzer, interview simulator, readiness engine and roadmaps) are available to every registered student.",
-  },
-  {
-    q: "How does the AI scoring work?",
-    a: "Our AI Engine uses explainable machine-learning techniques (TF-IDF, cosine similarity and weighted scoring) to evaluate resumes, skills and interview answers. Every score comes with the reasons behind it.",
-  },
-  {
-    q: "Which career tracks are supported?",
-    a: "Software Engineering, Artificial Intelligence, Cloud Computing, IT Infrastructure, Data Science and Business Analysis.",
-  },
-  {
-    q: "Will it help me beat applicant tracking systems (ATS)?",
-    a: "Absolutely. The analyzer checks for ATS-critical sections, contact info and keyword coverage, then tells you exactly what to fix.",
-  },
-  {
-    q: "Is my data secure?",
-    a: "Yes. We use JWT authentication, bcrypt-hashed passwords and owner-scoped access so only you can see your data.",
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function FAQ() {
   const [open, setOpen] = React.useState<number | null>(0);
+  const { t } = useI18n();
+  const faqs = [1, 2, 3, 4, 5].map((i) => ({
+    q: t(`faq.${i}.q`),
+    a: t(`faq.${i}.a`),
+  }));
 
   return (
     <section id="faq" className="py-24">
       <div className="container max-w-3xl">
         <div className="mb-12 text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-primary">
-            FAQ
+            {t("faq.eyebrow")}
           </p>
-          <h2 className="text-3xl font-bold md:text-4xl">Frequently asked questions</h2>
+          <h2 className="text-3xl font-bold md:text-4xl">{t("faq.title")}</h2>
         </div>
 
         <div className="space-y-3">

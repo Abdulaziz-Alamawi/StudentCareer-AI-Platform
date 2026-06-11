@@ -51,7 +51,11 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html[dir="rtl"] body {
+    font-family: var(--font-ar), var(--font-sans), ui-sans-serif, sans-serif;
   }
 }
 

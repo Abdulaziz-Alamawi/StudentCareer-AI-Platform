@@ -1,15 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const stats = [
-  { value: "9", label: "Intelligent modules" },
-  { value: "6", label: "Career tracks" },
-  { value: "100+", label: "Interview questions" },
-  { value: "0–100", label: "Readiness scoring" },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function Stats() {
+  const { t } = useI18n();
+  const stats = [
+    { value: "9", label: t("stats.modules") },
+    { value: "6", label: t("stats.tracks") },
+    { value: "100+", label: t("stats.questions") },
+    { value: "0–100", label: t("stats.scoring") },
+  ];
   return (
     <section id="stats" className="border-y border-border bg-secondary/30 py-16">
       <div className="container">

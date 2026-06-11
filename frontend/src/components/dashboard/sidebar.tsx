@@ -13,22 +13,24 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const nav = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { href: "/dashboard/resume", label: "Resume Builder", icon: FileText },
-  { href: "/dashboard/analyzer", label: "Resume Analyzer", icon: ScanSearch },
-  { href: "/dashboard/interview", label: "Interview Simulator", icon: Mic },
-  { href: "/dashboard/skills", label: "Skill Gap", icon: PuzzleIcon },
-  { href: "/dashboard/roadmap", label: "Career Roadmap", icon: Map },
-  { href: "/dashboard/profile", label: "Profile", icon: User },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { t } = useI18n();
+
+  const nav = [
+    { href: "/dashboard", label: t("side.overview"), icon: LayoutDashboard },
+    { href: "/dashboard/resume", label: t("side.resume"), icon: FileText },
+    { href: "/dashboard/analyzer", label: t("side.analyzer"), icon: ScanSearch },
+    { href: "/dashboard/interview", label: t("side.interview"), icon: Mic },
+    { href: "/dashboard/skills", label: t("side.skills"), icon: PuzzleIcon },
+    { href: "/dashboard/roadmap", label: t("side.roadmap"), icon: Map },
+    { href: "/dashboard/profile", label: t("side.profile"), icon: User },
+  ];
 
   return (
-    <aside className="hidden w-64 flex-shrink-0 border-r border-border bg-card/40 lg:block">
+    <aside className="hidden w-64 flex-shrink-0 border-e border-border bg-card/40 lg:block">
       <div className="sticky top-0 flex h-screen flex-col">
         <Link href="/" className="flex h-16 items-center gap-2 border-b border-border px-6 font-bold">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">

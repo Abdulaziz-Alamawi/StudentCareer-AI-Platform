@@ -5,18 +5,21 @@ import { GraduationCap, Menu, X } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LangToggle } from "@/components/lang-toggle";
 import { useAuth } from "@/lib/auth";
-
-const links = [
-  { href: "#features", label: "Features" },
-  { href: "#stats", label: "Impact" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#faq", label: "FAQ" },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function Navbar() {
   const [open, setOpen] = React.useState(false);
   const { user } = useAuth();
+  const { t } = useI18n();
+
+  const links = [
+    { href: "#features", label: t("nav.features") },
+    { href: "#stats", label: t("nav.impact") },
+    { href: "#testimonials", label: t("nav.testimonials") },
+    { href: "#faq", label: t("nav.faq") },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 glass">
@@ -41,24 +44,26 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <LangToggle />
           <ThemeToggle />
           {user ? (
             <Link href="/dashboard">
-              <Button>Dashboard</Button>
+              <Button>{t("common.dashboard")}</Button>
             </Link>
           ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost">Sign in</Button>
+                <Button variant="ghost">{t("common.signIn")}</Button>
               </Link>
               <Link href="/register">
-                <Button>Get Started</Button>
+                <Button>{t("common.getStarted")}</Button>
               </Link>
             </>
           )}
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
+          <LangToggle />
           <ThemeToggle />
           <Button variant="ghost" size="icon" onClick={() => setOpen(!open)}>
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -81,10 +86,10 @@ export function Navbar() {
             ))}
             <div className="flex gap-2 pt-2">
               <Link href="/login" className="flex-1">
-                <Button variant="outline" className="w-full">Sign in</Button>
+                <Button variant="outline" className="w-full">{t("common.signIn")}</Button>
               </Link>
               <Link href="/register" className="flex-1">
-                <Button className="w-full">Get Started</Button>
+                <Button className="w-full">{t("common.getStarted")}</Button>
               </Link>
             </div>
           </div>

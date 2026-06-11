@@ -3,38 +3,24 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
-const testimonials = [
-  {
-    quote:
-      "The AI analyzer showed me exactly why my resume was getting rejected. After fixing the ATS issues, I landed three interviews in a week.",
-    name: "Sara M.",
-    role: "CS Senior",
-  },
-  {
-    quote:
-      "The interview simulator is incredible. I practiced cloud computing scenarios and walked into my AWS interview fully prepared.",
-    name: "Omar K.",
-    role: "Fresh Graduate",
-  },
-  {
-    quote:
-      "The readiness score gave me a clear goal. The roadmap told me exactly what to learn next. I went from 'Developing' to 'Job Ready' in two months.",
-    name: "Lina A.",
-    role: "Data Science Student",
-  },
-];
+import { useI18n } from "@/lib/i18n";
 
 export function Testimonials() {
+  const { t } = useI18n();
+  const testimonials = [
+    { quote: t("testimonials.1.quote"), name: "Sara M.", role: t("testimonials.1.role") },
+    { quote: t("testimonials.2.quote"), name: "Omar K.", role: t("testimonials.2.role") },
+    { quote: t("testimonials.3.quote"), name: "Lina A.", role: t("testimonials.3.role") },
+  ];
   return (
     <section id="testimonials" className="border-y border-border bg-secondary/30 py-24">
       <div className="container">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-primary">
-            Loved by students
+            {t("testimonials.eyebrow")}
           </p>
           <h2 className="text-3xl font-bold md:text-4xl">
-            Results that speak for themselves
+            {t("testimonials.title")}
           </h2>
         </div>
 

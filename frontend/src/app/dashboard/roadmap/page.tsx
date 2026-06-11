@@ -11,8 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/dashboard/states";
+import { useI18n } from "@/lib/i18n";
 
 export default function RoadmapPage() {
+  const { t } = useI18n();
   const [track, setTrack] = React.useState(CAREER_TRACKS[0].value);
   const [major, setMajor] = React.useState("");
   const [skills, setSkills] = React.useState("");
@@ -30,9 +33,9 @@ export default function RoadmapPage() {
         interests: interests.split(",").map((s) => s.trim()).filter(Boolean),
       });
       setResult(res);
-      toast.success("Roadmap generated!");
+      toast.success(t("roadmap.generated"));
     } catch (e: any) {
-      toast.error(e.message ?? "Generation failed");
+      toast.error(e.message ?? t("roadmap.failed"));
     } finally {
       setLoading(false);
     }
@@ -41,25 +44,26 @@ export default function RoadmapPage() {
   return (
     <div>
       <PageHeader
-        title="Career Roadmap Generator"
-        description="Get a personalized learning, certification, project and career roadmap."
+        showBack
+        title={t("roadmap.title")}
+        description={t("roadmap.desc")}
       />
 
       <Card className="mb-6">
         <CardContent className="space-y-4 pt-6">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label>Career track</Label>
+              <Label>{t("roadmap.careerTrack")}</Label>
               <Select value={track} onChange={(e) => setTrack(e.target.value)}>
-                {CAREER_TRACKS.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
+                {CAREER_TRACKS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
                   </option>
                 ))}
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Major</Label>
+              <Label>{t("roadmap.major")}</Label>
               <Input
                 value={major}
                 onChange={(e) => setMajor(e.target.value)}
@@ -67,7 +71,7 @@ export default function RoadmapPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Current skills</Label>
+              <Label>{t("roadmap.currentSkills")}</Label>
               <Input
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
@@ -75,7 +79,7 @@ export default function RoadmapPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Interests</Label>
+              <Label>{t("roadmap.interests")}</Label>
               <Input
                 value={interests}
                 onChange={(e) => setInterests(e.target.value)}
@@ -85,50 +89,71 @@ export default function RoadmapPage() {
           </div>
           <Button onClick={generate} disabled={loading}>
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            <Map className="h-4 w-4" /> Generate roadmap
+            <Map className="h-4 w-4" /> {t("roadmap.generate")}
           </Button>
         </CardContent>
       </Card>
 
+      {!result && !loading && (
+        <EmptyState
+          icon={Map}
+          title={t("roadmap.emptyTitle")}
+          description={t("roadmap.emptyDesc")}
+        />
+      )}
+
       {result && (
         <div className="space-y-6">
-          <p className="text-sm text-muted-foreground">
-            Personalized roadmap for <strong>{result.track}</strong>
-          </p>
-          {result.sections.map((section) => (
+          <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-primary/20 bg-primary/[0.04] p-4">
+            <p className="text-sm text-muted-foreground">
+              {t("roadmap.personalizedFor")} <strong className="text-foreground">{result.track}</strong>
+            </p>
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Clock className="h-4 w-4 text-primary" />
+              {t("roadmap.totalDuration")}:{" "}
+              <span className="font-bold">
+                {result.sections.reduce(
+                  (sum, s) => sum + s.steps.reduce((a, st) => a + st.duration_weeks, 0),
+                  0
+                )}{" "}
+                {t("roadmap.weeksShort")}
+              </span>
+            </div>
+          </div>
+
+          {result.sections.map((section, si) => (
             <Card key={section.kind}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Badge>{section.kind}</Badge> {section.title}
+                  <Badge>{t("roadmap.phase")} {si + 1}</Badge> {section.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {section.steps.map((step) => (
-                  <div
-                    key={step.order}
-                    className="flex gap-4 rounded-lg border border-border p-4"
-                  >
-                    <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                      {step.order}
-                    </span>
-                    <div className="flex-1">
-                      <p className="font-medium">{step.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {step.description}
-                      </p>
-                      <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {step.duration_weeks} weeks
-                      </p>
-                      {step.resources.length > 0 && (
-                        <ul className="mt-2 text-xs text-muted-foreground">
-                          {step.resources.map((r) => (
-                            <li key={r}>• {r}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </div>
-                ))}
+              <CardContent>
+                <ol className="relative space-y-5 border-s-2 border-dashed border-border ps-6">
+                  {section.steps.map((step) => (
+                    <li key={step.order} className="relative">
+                      <span className="absolute -start-[2.1rem] flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground ring-4 ring-background">
+                        {step.order}
+                      </span>
+                      <div className="rounded-lg border border-border p-4">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <p className="font-medium">{step.title}</p>
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3" /> {step.duration_weeks} {t("roadmap.weeks")}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-sm text-muted-foreground">{step.description}</p>
+                        {step.resources.length > 0 && (
+                          <ul className="mt-2 space-y-0.5 text-xs text-muted-foreground">
+                            {step.resources.map((r) => (
+                              <li key={r}>• {r}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
               </CardContent>
             </Card>
           ))}

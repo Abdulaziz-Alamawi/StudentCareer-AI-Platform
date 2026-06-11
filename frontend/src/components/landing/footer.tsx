@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { GraduationCap, Github, Linkedin } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="border-t border-border bg-secondary/20">
       <div className="container py-12">
@@ -14,31 +18,30 @@ export function Footer() {
               StudentCareer AI
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-              AI-powered career development and employability assessment for students
-              and graduates.
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold">Product</h4>
+            <h4 className="mb-3 text-sm font-semibold">{t("footer.product")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#features" className="hover:text-foreground">Features</a></li>
-              <li><a href="#stats" className="hover:text-foreground">Impact</a></li>
-              <li><a href="#faq" className="hover:text-foreground">FAQ</a></li>
+              <li><a href="#features" className="hover:text-foreground">{t("nav.features")}</a></li>
+              <li><a href="#stats" className="hover:text-foreground">{t("nav.impact")}</a></li>
+              <li><a href="#faq" className="hover:text-foreground">{t("nav.faq")}</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold">Account</h4>
+            <h4 className="mb-3 text-sm font-semibold">{t("footer.account")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/login" className="hover:text-foreground">Sign in</Link></li>
-              <li><Link href="/register" className="hover:text-foreground">Get started</Link></li>
-              <li><Link href="/dashboard" className="hover:text-foreground">Dashboard</Link></li>
+              <li><Link href="/login" className="hover:text-foreground">{t("common.signIn")}</Link></li>
+              <li><Link href="/register" className="hover:text-foreground">{t("footer.getStarted")}</Link></li>
+              <li><Link href="/dashboard" className="hover:text-foreground">{t("common.dashboard")}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-3 text-sm font-semibold">Connect</h4>
+            <h4 className="mb-3 text-sm font-semibold">{t("footer.connect")}</h4>
             <div className="flex gap-3">
               <a
                 href="https://github.com"
@@ -59,8 +62,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row">
-          <p>© {new Date().getFullYear()} StudentCareer AI Platform. All rights reserved.</p>
-          <p>Built by Abdulaziz AlAmawi</p>
+          <p>© {new Date().getFullYear()} StudentCareer AI Platform. {t("footer.rights")}</p>
+          <p>{t("footer.builtBy")}</p>
         </div>
       </div>
     </footer>

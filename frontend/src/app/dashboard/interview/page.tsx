@@ -17,10 +17,13 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/dashboard/states";
+import { useI18n } from "@/lib/i18n";
 
 const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"];
 
 export default function InterviewPage() {
+  const { t } = useI18n();
   const [track, setTrack] = React.useState(CAREER_TRACKS[0].value);
   const [difficulty, setDifficulty] = React.useState("MEDIUM");
   const [questions, setQuestions] = React.useState<Question[]>([]);
@@ -36,7 +39,7 @@ export default function InterviewPage() {
       const qs = await api.getQuestions({ track, difficulty, limit: 5 });
       setQuestions(qs);
       setAnswers({});
-      if (qs.length === 0) toast.info("No questions found for this combination.");
+      if (qs.length === 0) toast.info(t("interview.noQuestions"));
     } catch (e: any) {
       toast.error(e.message ?? "Failed to load questions");
     } finally {
@@ -54,14 +57,14 @@ export default function InterviewPage() {
       })),
     };
     if (payload.answers.some((a) => !a.answer.trim())) {
-      toast.error("Please answer all questions.");
+      toast.error(t("interview.answerAll"));
       return;
     }
     setSubmitting(true);
     try {
       const res = await api.submitInterview(payload);
       setResult(res);
-      toast.success(`Interview scored: ${res.score}/100`);
+      toast.success(t("interview.scored", { n: res.score }));
     } catch (e: any) {
       toast.error(e.message ?? "Submission failed");
     } finally {
@@ -72,24 +75,25 @@ export default function InterviewPage() {
   return (
     <div>
       <PageHeader
-        title="AI Interview Simulator"
-        description="Practice real interview questions and get instant scored feedback."
+        showBack
+        title={t("interview.title")}
+        description={t("interview.desc")}
       />
 
       <Card className="mb-6">
         <CardContent className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-end">
           <div className="flex-1 space-y-2">
-            <Label>Career track</Label>
+            <Label>{t("interview.careerTrack")}</Label>
             <Select value={track} onChange={(e) => setTrack(e.target.value)}>
-              {CAREER_TRACKS.map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
+              {CAREER_TRACKS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
                 </option>
               ))}
             </Select>
           </div>
           <div className="flex-1 space-y-2">
-            <Label>Difficulty</Label>
+            <Label>{t("interview.difficulty")}</Label>
             <Select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
               {DIFFICULTIES.map((d) => (
                 <option key={d} value={d}>
@@ -103,7 +107,7 @@ export default function InterviewPage() {
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                <Mic className="h-4 w-4" /> Start
+                <Mic className="h-4 w-4" /> {t("interview.start")}
               </>
             )}
           </Button>
@@ -116,10 +120,10 @@ export default function InterviewPage() {
             <ScoreRing value={result.score} label="Score" />
             <div className="flex-1">
               <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <Trophy className="h-5 w-5 text-amber-500" /> Interview Report
+                <Trophy className="h-5 w-5 text-amber-500" /> {t("interview.report")}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                You answered {result.total_questions} questions.
+                {t("interview.answered", { n: result.total_questions })}
               </p>
               {result.improvement_areas.length > 0 && (
                 <ul className="mt-3 space-y-1 text-sm">
@@ -130,6 +134,39 @@ export default function InterviewPage() {
                   ))}
                 </ul>
               )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {questions.length === 0 && !result && !loading && (
+        <EmptyState
+          icon={Mic}
+          title={t("interview.emptyTitle")}
+          description={t("interview.emptyDesc")}
+        />
+      )}
+
+      {questions.length > 0 && !result && (
+        <Card className="mb-4">
+          <CardContent className="flex items-center gap-4 py-4">
+            <span className="text-sm font-medium text-muted-foreground">
+              {t("interview.completion", {
+                done: questions.filter((q) => (answers[q.id] || "").trim()).length,
+                total: questions.length,
+              })}
+            </span>
+            <div className="h-2 flex-1 overflow-hidden rounded-full bg-secondary">
+              <div
+                className="h-full rounded-full bg-primary transition-all duration-500"
+                style={{
+                  width: `${
+                    (questions.filter((q) => (answers[q.id] || "").trim()).length /
+                      questions.length) *
+                    100
+                  }%`,
+                }}
+              />
             </div>
           </CardContent>
         </Card>
@@ -155,13 +192,13 @@ export default function InterviewPage() {
                     onChange={(e) =>
                       setAnswers({ ...answers, [q.id]: e.target.value })
                     }
-                    placeholder="Type your answer here..."
+                    placeholder={t("interview.answerPlaceholder")}
                     disabled={!!result}
                     className="min-h-[110px]"
                   />
                   {fb && (
                     <div className="mt-3 rounded-lg bg-secondary/50 p-3 text-sm">
-                      <span className="font-semibold">Score: {fb.score}/100</span>
+                      <span className="font-semibold">{t("interview.score")}: {fb.score}/100</span>
                       <p className="mt-1 text-muted-foreground">{fb.feedback}</p>
                     </div>
                   )}
@@ -173,7 +210,7 @@ export default function InterviewPage() {
           {!result && (
             <Button onClick={submit} disabled={submitting} size="lg" className="w-full">
               {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-              Submit answers
+              {t("interview.submit")}
             </Button>
           )}
         </div>

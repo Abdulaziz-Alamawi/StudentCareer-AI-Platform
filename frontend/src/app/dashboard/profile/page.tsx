@@ -12,9 +12,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { useAuth } from "@/lib/auth";
+import { useI18n } from "@/lib/i18n";
 
 export default function ProfilePage() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [profile, setProfile] = React.useState<Partial<Profile>>({});
   const [loading, setLoading] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
@@ -32,13 +34,35 @@ export default function ProfilePage() {
     try {
       const updated = await api.updateProfile(profile);
       setProfile(updated);
-      toast.success("Profile updated!");
+      toast.success(t("profile.updated"));
     } catch (e: any) {
       toast.error(e.message);
     } finally {
       setSaving(false);
     }
   }
+
+  const completionFields = [
+    profile.headline,
+    profile.bio,
+    profile.major,
+    profile.university,
+    profile.graduation_year,
+    profile.career_track,
+    profile.location,
+    profile.linkedin_url,
+    profile.github_url,
+  ];
+  const filled = completionFields.filter((v) => v !== undefined && v !== null && `${v}`.trim() !== "").length;
+  const completion = Math.round((filled / completionFields.length) * 100);
+
+  const initials = (user?.full_name || user?.email || "?")
+    .trim()
+    .split(" ")
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   if (loading) {
     return (
@@ -51,44 +75,72 @@ export default function ProfilePage() {
   return (
     <div>
       <PageHeader
-        title="Profile"
-        description="Manage your personal and career information."
+        showBack
+        title={t("profile.title")}
+        description={t("profile.desc")}
         action={
           <Button onClick={save} disabled={saving}>
             {saving && <Loader2 className="h-4 w-4 animate-spin" />}
-            Save changes
+            {t("common.saveChanges")}
           </Button>
         }
       />
+
+      <Card className="mb-6">
+        <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-violet-500 text-2xl font-bold text-white">
+            {initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-lg font-semibold">{user?.full_name || "—"}</p>
+            <p className="truncate text-sm text-muted-foreground">{profile.headline || user?.email}</p>
+            <div className="mt-3 max-w-sm">
+              <div className="mb-1 flex items-center justify-between text-xs">
+                <span className="text-muted-foreground">{t("profile.completion")}</span>
+                <span className="font-semibold">{completion}%</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-violet-500 transition-all duration-700"
+                  style={{ width: `${completion}%` }}
+                />
+              </div>
+              {completion < 100 && (
+                <p className="mt-1.5 text-xs text-muted-foreground">{t("profile.completionHint")}</p>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardContent className="space-y-6 pt-6">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label>Full name</Label>
+              <Label>{t("auth.fullName")}</Label>
               <Input value={user?.full_name ?? ""} disabled />
             </div>
             <div className="space-y-2">
-              <Label>Email</Label>
+              <Label>{t("auth.email")}</Label>
               <Input value={user?.email ?? ""} disabled />
             </div>
             <div className="space-y-2">
-              <Label>Headline</Label>
+              <Label>{t("profile.headline")}</Label>
               <Input
                 value={profile.headline ?? ""}
                 onChange={(e) => setProfile({ ...profile, headline: e.target.value })}
-                placeholder="CS Student | Aspiring Software Engineer"
+                placeholder={t("profile.headlinePlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Career track</Label>
+              <Label>{t("profile.careerTrack")}</Label>
               <Select
                 value={profile.career_track ?? ""}
                 onChange={(e) =>
                   setProfile({ ...profile, career_track: e.target.value || undefined })
                 }
               >
-                <option value="">Select track</option>
+                <option value="">{t("profile.selectTrack")}</option>
                 {CAREER_TRACKS.map((t) => (
                   <option key={t.value} value={t.value}>
                     {t.label}
@@ -97,21 +149,21 @@ export default function ProfilePage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Major</Label>
+              <Label>{t("profile.major")}</Label>
               <Input
                 value={profile.major ?? ""}
                 onChange={(e) => setProfile({ ...profile, major: e.target.value })}
               />
             </div>
             <div className="space-y-2">
-              <Label>University</Label>
+              <Label>{t("profile.university")}</Label>
               <Input
                 value={profile.university ?? ""}
                 onChange={(e) => setProfile({ ...profile, university: e.target.value })}
               />
             </div>
             <div className="space-y-2">
-              <Label>Graduation year</Label>
+              <Label>{t("profile.gradYear")}</Label>
               <Input
                 type="number"
                 value={profile.graduation_year ?? ""}
@@ -124,7 +176,7 @@ export default function ProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Location</Label>
+              <Label>{t("profile.location")}</Label>
               <Input
                 value={profile.location ?? ""}
                 onChange={(e) => setProfile({ ...profile, location: e.target.value })}
@@ -146,11 +198,11 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Bio</Label>
+            <Label>{t("profile.bio")}</Label>
             <Textarea
               value={profile.bio ?? ""}
               onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-              placeholder="Tell us about yourself..."
+              placeholder={t("profile.bioPlaceholder")}
             />
           </div>
         </CardContent>
