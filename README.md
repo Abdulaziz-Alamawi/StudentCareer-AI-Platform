@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 StudentCareer AI Platform
+#  StudentCareer AI Platform
 
 ### AI-Powered Career Intelligence & Readiness Platform
 
@@ -24,7 +24,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ---
 
-## 📚 Table of Contents
+##  Table of Contents
 
 - [Project Overview](#-project-overview)
 - [Key Features](#-key-features)
@@ -44,7 +44,7 @@ Helping students and graduates build stronger resumes, ace interviews, close ski
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 **StudentCareer AI Platform** is a full-stack, AI-powered SaaS application designed to maximize the **employability** of university students and fresh graduates.
 
@@ -59,24 +59,24 @@ The platform is built with a clean, scalable, production-minded architecture and
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 | Module | Description |
 | --- | --- |
-| 🏠 **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
-| 🔐 **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
-| 📄 **Smart Resume Builder** | Create, edit, duplicate, and export resumes with 3 templates. |
-| 🤖 **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing-skills report. |
-| 🎤 **AI Interview Simulator** | 6 career tracks; technical / behavioral / scenario questions; difficulty levels; scoring. |
-| 📊 **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
-| 🧩 **Skill Gap Analyzer** | Detects missing skills; recommends technologies, certifications, and projects. |
-| 🗺️ **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
-| 📈 **User Dashboard** | Unified analytics dashboard for all modules with charts and score rings. |
-| 🌐 **Bilingual UI** | Full English / Arabic localization with RTL support. |
+|  **Landing Page** | Modern SaaS marketing site: hero, features, stats, testimonials, FAQ, contact. |
+|  **Authentication** | JWT-based register / login / logout, hashed passwords, protected routes, profiles. |
+|  **Smart Resume Builder** | Create, edit, duplicate, and export resumes with 3 templates. |
+|  **AI Resume Analyzer** | ATS score, completeness, formatting, content quality, missing-skills report. |
+|  **AI Interview Simulator** | 6 career tracks; technical / behavioral / scenario questions; difficulty levels; scoring. |
+|  **Career Readiness Engine** | Weighted readiness score (resume, skills, certs, projects, interview). |
+|  **Skill Gap Analyzer** | Detects missing skills; recommends technologies, certifications, and projects. |
+|  **Career Roadmap Generator** | Personalized learning / certification / project / career roadmaps. |
+|  **User Dashboard** | Unified analytics dashboard for all modules with charts and score rings. |
+|  **Bilingual UI** | Full English / Arabic localization with RTL support. |
 
 ---
 
-## 🏗 System Architecture
+##  System Architecture
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
@@ -115,7 +115,7 @@ See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🛠 Technology Stack
+##  Technology Stack
 
 | Layer | Technologies |
 | --- | --- |
@@ -128,7 +128,7 @@ See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for the full design.
 
 ---
 
-## 🤖 AI Modules
+##  AI Modules
 
 All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and dependency-free** (no external API calls by default). A pluggable provider interface allows an LLM/OpenAI backend to be added later.
 
@@ -144,7 +144,7 @@ All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 ### Landing Page
 ![Landing Page](./docs/screenshots/landing-page.png)
@@ -158,7 +158,7 @@ All AI logic lives in `backend/app/ai/` and is **deterministic, explainable, and
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 ### Prerequisites
 - Node.js ≥ 20
@@ -209,7 +209,7 @@ npm run dev
 
 ---
 
-## 📡 API Documentation
+##  API Documentation
 
 Interactive docs (Swagger UI) are auto-generated at `http://localhost:8000/docs`.
 A written reference lives in [`docs/API.md`](./docs/API.md).
@@ -229,7 +229,7 @@ Key endpoint groups (prefixed with `/api/v1`):
 
 ---
 
-## 🚢 Deployment Guide
+##  Deployment Guide
 
 **Frontend → Vercel**
 1. Import the `frontend/` directory as a Vercel project.
@@ -281,7 +281,7 @@ StudentCareer-AI-Platform/
 
 ---
 
-## 📊 Project Statistics
+##  Project Statistics
 
 | Capability | Status |
 | --- | :---: |
@@ -296,7 +296,7 @@ StudentCareer-AI-Platform/
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 cd backend
@@ -315,7 +315,7 @@ pytest -v                 # unit + integration + validation + E2E tests
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Abdulaziz AlAmawi**
 
@@ -323,7 +323,7 @@ Full-Stack & AI Engineer — designed and built the entire platform end to end: 
 
 ---
 
-## 📄 License
+##  License
 
 Distributed under the **MIT License**. See [`LICENSE`](./LICENSE).
 
