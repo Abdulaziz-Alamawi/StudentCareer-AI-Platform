@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 StudentCareer AI Platform
+#  StudentCareer AI Platform
 
 ### An AI-powered career development & employability assessment system
 
